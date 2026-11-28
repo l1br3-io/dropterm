@@ -1690,7 +1690,13 @@ fn command_timer_re_freezes_a_second_command_fresh() {
     // The next witnessed start clears the freeze and re-arms — the
     // window between proves the second freeze is the second
     // command's own, never the first's survivor.
-    terminal.input_no_scroll(&b"sleep 0.3\r"[..]);
+    // sleep 1.0 (the other timer tests run 0.3): the floor below
+    // wants the suite's witness-latency slip to stay noise. 0.3 left
+    // this test a ~50% full-suite flake on a loaded machine
+    // (2026-11-28: three reds at default parallelism, green in
+    // isolation every time; the sibling test's 2026-11-08 ruling
+    // records the same phenomenon against half this budget).
+    terminal.input_no_scroll(&b"sleep 1.0\r"[..]);
     poll_update_until(
         &mut terminal,
         |t| t.command_frozen().is_none() && t.command_live().1.is_some(),
@@ -1704,7 +1710,7 @@ fn command_timer_re_freezes_a_second_command_fresh() {
     let second = terminal
         .command_frozen()
         .expect("the second frozen duration");
-    assert!(second >= std::time::Duration::from_millis(200));
+    assert!(second >= std::time::Duration::from_millis(500));
     assert!(second < std::time::Duration::from_secs(5));
     assert_eq!(terminal.take_command_finished(), Some(second));
     assert_eq!(terminal.take_command_finished(), None);
