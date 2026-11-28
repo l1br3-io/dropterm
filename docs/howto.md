@@ -23,7 +23,7 @@ The task-shaped entry point for DropTerm, the cross-platform drop-down terminal:
 ## Look and feel
 
 - **Pin light or dark regardless of the system theme** - `theme_preference` (`System`/`Dark`/`Light`), with a scheme per mode (`color_scheme_dark`/`color_scheme_light`) from the twelve built-ins ([configuration](configuration.md#appearance), [theming](theming.md#color-schemes)).
-- **Turn off the slide animation** - `slide_animation_enabled: false` makes show/hide instant ([configuration](configuration.md#behavior-toggles), [animation](animation.md)).
+- **Animate the show and hide** - show/hide is instant by default; `slide_animation_enabled: true` adds the 150 ms slide ([configuration](configuration.md#behavior-toggles), [animation](animation.md)).
 - **Tailor the status band** - hide it (`Ctrl+Shift+B`), or keep it and hide individual segments - clock, branch, zoom, any of them - each with its own `status_bar_show_*` key ([status bar](status-bar.md#toggling-and-tailoring)).
 - **Run a tab in its own colors and font size** - the same profile fields: a set field wins for that tab, an unset one inherits the global look ([configuration: profiles](configuration.md#profiles)).
 

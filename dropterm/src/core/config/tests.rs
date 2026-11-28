@@ -221,12 +221,12 @@ fn default_schemes_are_the_github_pair_and_preference_follows_system() {
 }
 
 #[test]
-fn session_and_slide_toggles_default_on() {
-    // Both keys ship `true` — the default is the always-on
-    // behavior, so existing configs keep it.
+fn session_persists_and_slide_defaults_off() {
+    // Session persistence ships `true` (the always-on behavior);
+    // the slide animation ships `false` (instant show/hide).
     let config = DropTermConfig::default();
     assert!(config.session_persistence_enabled);
-    assert!(config.slide_animation_enabled);
+    assert!(!config.slide_animation_enabled);
 }
 
 #[test]

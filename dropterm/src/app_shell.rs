@@ -9197,7 +9197,13 @@ mod tests {
         // that). The end state must be hidden — once — never the
         // hide-then-reshow flicker the two independent signals
         // produced without coalescing.
-        let (shell, _verbs, tray, cx) = shell_with_verb_wire(cx, DropTermConfig::default());
+        let (shell, _verbs, tray, cx) = shell_with_verb_wire(
+            cx,
+            DropTermConfig {
+                slide_animation_enabled: true,
+                ..DropTermConfig::default()
+            },
+        );
         // Consume the startup toggle on its own pump.
         cx.update(|_window, cx| {
             shell.update(cx, Shell::pump);

@@ -109,10 +109,10 @@ Each control states next to it when its edit applies. With the terminal hidden w
 | `autosuggestions_completions_extended` | live - the table reloads on the echo: off answers the embedded floor alone (the installed file's commands stop completing), on adds the tier beside it again (a re-toggle reuses the already-parsed file; a system data file does not change under a running app) |
 | `images_enabled` | live - off makes the next OSC 1337 sequence inert (nothing decodes or places, no error; already-placed images keep rendering), on renders from the next sequence ([images](images.md)) |
 
-These toggles (the Tabs and Dropdown pages) default to `true`, which is exactly the pre-settings behavior:
+These toggles (the Tabs and Dropdown pages) default to `true`, which is exactly the pre-settings behavior - with one exception, the slide animation, which ships off:
 
 - `session_persistence_enabled` is symmetric: `false` stops session saves *and* skips launch restore. The existing saved session is never deleted or rewritten by disabling.
-- `slide_animation_enabled`: `false` restores instant show/hide.
+- `slide_animation_enabled` ships `false`: show/hide is instant unless you opt into the 150 ms slide with `true`.
 - `new_tab_after_current`: `false` appends new tabs at the end of the list (Guake's default ordering) instead of directly after the active tab. `Ctrl+Shift+T`, `Ctrl+Shift+H`, the tab bar's `+`, and the remote `new-tab` follow it; duplicates always land after the active tab, and session restore keeps the saved order.
 - `close_confirmation_enabled`: `false` restores instant, unconfirmed closes ([configuration](configuration.md#close-confirmation)).
 

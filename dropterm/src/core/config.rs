@@ -289,9 +289,9 @@ pub struct DropTermConfig {
     /// symmetric: saves stop and launch restore is skipped, while the
     /// state file itself is left untouched to wait for a re-enable.
     pub session_persistence_enabled: bool,
-    /// Animate show/hide with the 150 ms slide. Defaults to `true`.
-    /// `false` restores instant show/hide with immediate destroy; a
-    /// running animation is never aborted by the toggle.
+    /// Animate show/hide with the 150 ms slide. Defaults to `false`
+    /// (instant show/hide); `true` opts into the animation. A running
+    /// animation is never aborted by the toggle.
     pub slide_animation_enabled: bool,
     /// Post a desktop notification when a bell rings while the
     /// terminal is hidden — one notification per
@@ -689,7 +689,7 @@ impl Default for DropTermConfig {
             scrollback_lines: 10_000,
             hide_on_focus_loss: true,
             session_persistence_enabled: true,
-            slide_animation_enabled: true,
+            slide_animation_enabled: false,
             bell_notification_enabled: true,
             command_finish_notification_enabled: true,
             command_finish_notification_after_secs: 5,
