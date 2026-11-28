@@ -611,10 +611,24 @@ fn ghost_showing(
     paint_frame(cx);
     cx.simulate_keystrokes("g");
     cx.simulate_keystrokes("i");
+    // The update computes the suggestion and the buffer together, so
+    // a suggestion alone is not the typed prefix: the tty echoes the
+    // two presses as separate reads, and the update that lands the
+    // "g" already shows a suggestion for "g". Waiting for the row to
+    // hold "gi" catches the update that adopted the whole prefix, and
+    // the suffix read below is then the one for "gi".
     paint_until(
         cx,
         &terminal,
-        |engine| engine.suggestion().is_some(),
+        |engine| {
+            engine.suggestion().is_some()
+                && engine.with_buffer(|buffer| {
+                    buffer
+                        .lines
+                        .iter()
+                        .any(|line| line.text().contains("P$ gi"))
+                })
+        },
         "the typed prefix never showed a suggestion",
     );
     let showing = terminal
