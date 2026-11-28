@@ -9,6 +9,14 @@ The terminal slides down from the top (or bottom) edge of the screen and is togg
 
 ## Installing
 
+### One command
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/l1br3-io/dropterm/main/scripts/install.sh | sh
+```
+
+resolves the latest release, verifies the checksums file's SSH signature and the tarball against the verified checksums, and installs the `usr/` tree into `~/.local` — no sudo. Inspect before running: `curl -fsSL https://raw.githubusercontent.com/l1br3-io/dropterm/main/scripts/install.sh -o install.sh && less install.sh && sh install.sh`. Knobs (`DROPTERM_VERSION`, `DROPTERM_PREFIX`, `DROPTERM_NO_MODIFY_PATH`) and the exact file list are in the script header. Works from v0.6.0 on, which is when signed checksums started.
+
 ### From a release
 
 Grab the tarball for your architecture from the
