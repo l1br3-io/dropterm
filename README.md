@@ -136,7 +136,7 @@ A few known rough edges — the surface recreate-on-hide workaround, Shift-modif
 
 ## Contributing
 
-The dev loop, the verification bar, and the module map: [Development](docs/development.md), [Testing](docs/testing.md), [Architecture](docs/architecture.md). Runtime behavior is only testable on real COSMIC hardware, so the manual checklist is the contract every change answers to.
+Start from [CONTRIBUTING.md](CONTRIBUTING.md); the dev loop, the verification bar, and the module map: [Development](docs/development.md), [Testing](docs/testing.md), [Architecture](docs/architecture.md). Runtime behavior is only testable on real COSMIC hardware, so the manual checklist is the contract every change answers to.
 
 ## Credits
 
