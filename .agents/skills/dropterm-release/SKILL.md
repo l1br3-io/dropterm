@@ -16,8 +16,8 @@ description: The guided release ritual for DropTerm — the agent as flight guid
 
 A release is two public artifacts telling one story — the annotated
 `v<version>` tag and the GitHub Release that CI publishes from it
-(both per-arch tarballs, the source archive, `sha256sums`,
-`vendor.tar`).
+(both per-arch tarballs, the source archive, the signed `sha256sums`
+and its `sha256sums.sig`, `vendor.tar`).
 
 You are the flight guide, not a spectator and not a gatekeeper. The
 maintainer decides and types everything public; you do everything
@@ -125,6 +125,9 @@ Probe first, silently — commands, no decisions yet:
 - **Working tree clean, on `main`, `main..origin/main` empty.** A
   release cut from a stale or dirty main silently reverts merged
   work; fix with `git pull --rebase origin main`.
+- **The signing secret exists** — `gh secret list` names
+  `RELEASE_SIGN_KEY`. A tag push without it dies at release.yml's
+  signing step; the one-time setup lives in `keys/README.md`.
 
 Then present, in one message: the derived version with its driving
 commits, the flight checklist, and the opening structured question —
@@ -220,7 +223,8 @@ equals the gated HEAD — then take over the watching entirely:
   set by name — both per-arch tarballs
   (`dropterm-<ver>-x86_64.tar.gz`,
   `…-aarch64.tar.gz`), `v<X.Y.Z>.tar.gz` (the source archive),
-  `vendor.tar`, `sha256sums`. The page body is GitHub's
+  `vendor.tar`, `sha256sums`, `sha256sums.sig`. The page body is
+  GitHub's
   auto-generated notes; the curated prose lives in releases.md and
   the metainfo, not there.
 - On red: stop, report the failed job verbatim, lay out the two
@@ -263,5 +267,6 @@ Verification is green, not that the steps ran.
 - [ ] tag `vX.Y.Z` on origin at the gated HEAD; `Cargo.toml` reads
       `X.Y.Z` (release.yml's tag == Cargo.toml guard passed)
 - [ ] the release page exists with the full asset set — both per-arch
-      tarballs, the source archive, `vendor.tar`, `sha256sums`
+      tarballs, the source archive, `vendor.tar`, `sha256sums`,
+      `sha256sums.sig`
 - [ ] the working tree is clean

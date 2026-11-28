@@ -22,7 +22,7 @@ tar -xzf dropterm-0.5.0-x86_64.tar.gz
 sudo cp -a usr/. /usr/
 ```
 
-ARM machines take the `dropterm-0.5.0-aarch64.tar.gz` asset instead. The release also ships `vendor.tar`, the complete dependency snapshot for `just build-vendored` offline rebuilds. To uninstall, remove the two `dropterm*` binaries from `/usr/bin` and the `io.github.l1br3_io.dropterm*` files under `/usr/share/{applications,icons,metainfo}/` — or, from a source checkout, `sudo just uninstall`.
+ARM machines take the `dropterm-0.5.0-aarch64.tar.gz` asset instead. The release also ships `vendor.tar`, the complete dependency snapshot for `just build-vendored` offline rebuilds. Releases from 0.6.0 on also ship a signed `sha256sums.sig`; download it plus [keys/allowed_signers](https://raw.githubusercontent.com/l1br3-io/dropterm/main/keys/allowed_signers) and check the checksums with `ssh-keygen -Y verify -f allowed_signers -I dropterm-release -s sha256sums.sig -n file < sha256sums` before running `sha256sum -c` — [keys/README.md](keys/README.md) carries the details. (v0.5.0 predates signing.) To uninstall, remove the two `dropterm*` binaries from `/usr/bin` and the `io.github.l1br3_io.dropterm*` files under `/usr/share/{applications,icons,metainfo}/` — or, from a source checkout, `sudo just uninstall`.
 
 ### From source
 

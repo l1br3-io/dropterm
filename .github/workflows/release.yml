@@ -182,6 +182,32 @@ jobs:
           echo
           cat sha256sums
 
+      # The checksums file is signed with the ed25519 SSH key in the
+      # RELEASE_SIGN_KEY secret; keys/README.md carries the one-time key
+      # setup and the user-facing verify command. A tag push without the
+      # secret is a broken release and fails here; a dry-run without it
+      # assembles the set unsigned, with a notice.
+      - name: Sign sha256sums
+        env:
+          RELEASE_SIGN_KEY: ${{ secrets.RELEASE_SIGN_KEY }}
+        run: |
+          set -eu
+          if [ -z "$RELEASE_SIGN_KEY" ]; then
+            if [ "${{ github.event_name }}" = "push" ]; then
+              echo "::error::RELEASE_SIGN_KEY is not set - refusing to publish an unsigned release (see keys/README.md)"
+              exit 1
+            fi
+            echo "::notice::RELEASE_SIGN_KEY not set - dry-run artifact set stays unsigned"
+            exit 0
+          fi
+          umask 077
+          keydir="$(mktemp -d)"
+          trap 'rm -rf "$keydir"' EXIT
+          printf '%s\n' "$RELEASE_SIGN_KEY" > "$keydir/key"
+          cd out
+          ssh-keygen -Y sign -f "$keydir/key" -n file sha256sums
+          ls -l sha256sums.sig
+
       - name: Publish GitHub Release
         if: github.event_name == 'push'
         env:

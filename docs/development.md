@@ -276,7 +276,18 @@ below are what the command does; they remain the manual path.
    [release.yml](../.github/workflows/release.yml) runs the test suite on
    the release bits, builds the per-arch tarballs and `vendor.tar`, proves
    the vendored offline build, guards tag against `Cargo.toml`, and
-   publishes the GitHub release with `sha256sums`.
+   publishes the GitHub release with `sha256sums` — signed as
+   `sha256sums.sig` by the ed25519 SSH key in the `RELEASE_SIGN_KEY`
+   secret. A tag push without the secret fails the signing step rather
+   than publishing unsigned; a dry-run without it assembles the set
+   unsigned, with a notice.
+
+The signing key is set up once, not per release:
+[keys/README.md](../keys/README.md) has the commands — generate the
+ed25519 key with the `dropterm-release` principal, commit
+`keys/release.pub` and `keys/allowed_signers`, store the private half as
+the `RELEASE_SIGN_KEY` secret. Users verify `sha256sums` against
+`allowed_signers` with the command printed in README's install section.
 
 The version is semver: additive features take the minor, fixes the patch.
 A failed gate mid-recipe leaves the version bumps uncommitted in the tree;
